@@ -1,0 +1,13 @@
+{%macro displayArticleList(article_list)%}
+  {%for article in article_list%}
+<div class="container col-xs-12 col-sm-12 col-md-12 col-lg-12 article-card text-center">
+
+    <h2><a href="/article/{{article.id}}">
+      {{article.title}}
+    </a></h2>
+    <h3><small>Date created : {{article.date}}</small></h3>
+
+</div>
+
+  {%endfor%}
+{%endmacro%}
