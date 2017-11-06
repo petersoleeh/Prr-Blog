@@ -1,6 +1,15 @@
-{%extends 'base.html'%}
+{%extends 'base.html'%} {%import 'macros.html'as macro%}
 
 {%block styles%}
   {{super()}}
   <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{%endblock%}
+
+<!-- content block -->
+{%block content%}
+<div class="container">
+  <ul>
+    {{macro.displayArticleList(article)}}
+  </ul>
+</div>
 {%endblock%}
