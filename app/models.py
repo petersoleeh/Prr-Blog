@@ -1,5 +1,5 @@
 from . import db
-from datetime import date, datetime
+from datetime import datetime
 
 
 class Article(db.Model):
@@ -11,6 +11,15 @@ class Article(db.Model):
     date = db.Column(db.DateTime,default =datetime.utcnow)
     title = db.Column(db.String(255))
     writer_id = db.Column(db.Integer,db.ForeignKey("writers.id"))
+
+    def save_article(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_articles(cls):
+        articles = Article.query.all()
+        return articles
 
 
 
@@ -36,6 +45,9 @@ class Writer(db.Model):
     writername = db.Column(db.String(255))
     articles = db.relationship('Article',backref='writers',lazy = "dynamic")
 
+    def __repr__(self):
+        return f'Writer {self.writername}'
+
 
 
 class Comment(db.Model):
@@ -47,3 +59,13 @@ class Comment(db.Model):
     article_title = db.Column(db.String)
     date = db.Column(db.DateTime,default =datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+    @classmethod
+    def get_comments(cls,id):
+        comments = Comment.query.filter_by(article_id = id).all()
+        return comments
